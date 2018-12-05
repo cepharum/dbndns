@@ -4,5 +4,5 @@ This repository has been started to keep djbdns and its fork dbndns available fo
 
 ## Versions
 
-* djbdns 1.05
-* dbndns djbdns_1.05-9~exp2
+* **djbdns:** 1.05
+* **dbndns:** djbdns_1.05-9~exp2
