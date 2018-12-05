@@ -1,0 +1,151 @@
+#!/usr/bin/make -f
+
+STRIP =strip
+ifneq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+  STRIP =: nostrip
+endif
+
+DIR =$(shell pwd)/debian/djbdns
+DIRDBN =$(shell pwd)/debian/dbndns
+DIRCACHERUN =$(shell pwd)/debian/dnscache-run
+DIRTINYRUN =$(shell pwd)/debian/tinydns-run
+
+configure: deb-checkdir configure-stamp
+configure-stamp:
+	for i in `cat FILES`; do \
+	  test -r dbndns/$$i || cp -p $$i dbndns/$$i || exit 1; \
+	done
+	touch configure-stamp
+
+patch: deb-checkdir patch-stamp dbndns/patch-stamp
+patch-stamp: configure-stamp
+	for i in `ls -1 debian/diff/*.diff || :`; do \
+	  patch -p1 <$$i || exit 1; \
+	done
+	touch patch-stamp
+dbndns/patch-stamp: configure-stamp
+	for i in `ls -1 dbndns/diff/*.diff || :`; do \
+	  (cd dbndns/ && patch -p1) <$$i || exit 1; \
+	done
+	touch dbndns/patch-stamp
+
+build: deb-checkdir build-stamp dbndns/build-stamp
+build-stamp: patch-stamp
+	test -r conf-home'{orig}' || cp -f conf-home conf-home'{orig}'
+	echo /usr >conf-home
+	test -r conf-cc'{orig}' || cp conf-cc conf-cc'{orig}'
+	echo 'gcc -O2 -g -include /usr/include/errno.h' >conf-cc
+	$(MAKE)
+	touch build-stamp
+dbndns/build-stamp: dbndns/patch-stamp
+	test -r dbndns/conf-home'{orig}' || \
+	  cp -f dbndns/conf-home dbndns/conf-home'{orig}'
+	echo /usr >dbndns/conf-home
+	test -r dbndns/conf-cc'{orig}' || \
+	  cp dbndns/conf-cc dbndns/conf-cc'{orig}'
+	echo 'gcc -O2 -g -include /usr/include/errno.h' >dbndns/conf-cc
+	$(MAKE) -Cdbndns/
+	touch dbndns/build-stamp
+
+po-templates: po-templates-stamp
+po-templates-stamp: deb-checkdir
+	po2debconf debian/tinydns-run.templates.in \
+	  >debian/tinydns-run.templates
+	touch po-templates-stamp
+
+clean: deb-checkdir deb-checkuid
+	rm -f `cat TARGETS`
+	for i in dbndns/*; do test -d $$i || rm -f $$i; done
+	test ! -e patch-stamp || \
+	  for i in `ls -1r debian/diff/*.diff || :`; do patch -p1 -R <$$i; done
+	rm -f configure-stamp patch-stamp build-stamp \
+	  dbndns/patch-stamp dbndns/build-stamp po-templates-stamp
+	rm -rf '$(DIR)' '$(DIRDBN)' '$(DIRCACHERUN)' '$(DIRTINYRUN)'
+	rm -f debian/files debian/substvars debian/tinydns-run.templates \
+	  changelog
+	test ! -r conf-home'{orig}' || mv -f conf-home'{orig}' conf-home
+	test ! -r conf-cc'{orig}' || mv conf-cc'{orig}' conf-cc
+
+install: install-arch install-indep
+install-arch: deb-checkdir deb-checkuid build-stamp dbndns/build-stamp
+	rm -rf '$(DIR)' '$(DIRDBN)'
+	# djbdns programs
+	install -d -m0755 '$(DIR)'/usr
+	test -r conf-home'{orig}' || cp conf-home conf-home'{orig}'
+	echo '$(DIR)'/usr >conf-home
+	rm -f install instcheck install.o instcheck.o hier.o auto_home.o
+	$(MAKE) install instcheck
+	mv -f conf-home'{orig}' conf-home
+	./install
+	./instcheck
+	for i in '$(DIR)'/usr/bin/*; do \
+	  test "`head -c2 $$i`" = '#!' || \
+	    $(STRIP) -R .comment -R .note $$i || exit 1; \
+	done
+	# dbndns programs
+	install -d -m0755 '$(DIRDBN)'/usr
+	test -r dbndns/conf-home'{orig}' || \
+	  cp dbndns/conf-home dbndns/conf-home'{orig}'
+	echo '$(DIRDBN)'/usr >dbndns/conf-home
+	(cd dbndns/ && \
+	  rm -f install instcheck install.o instcheck.o hier.o auto_home.o)
+	$(MAKE) -Cdbndns/ install instcheck
+	mv -f dbndns/conf-home'{orig}' dbndns/conf-home
+	(cd dbndns/ && ./install)
+	(cd dbndns/ && ./instcheck)
+	for i in '$(DIRDBN)'/usr/bin/*; do \
+	  test "`head -c2 $$i`" = '#!' || \
+	    $(STRIP) -R .comment -R .note $$i || exit 1; \
+	done
+	# etc
+	install -d -m0755 '$(DIR)'/etc
+	install -m0644 debian/dnsroots.global '$(DIR)'/etc/dnsroots.global
+	cp -a '$(DIR)'/etc '$(DIRDBN)'/etc
+	# manpages
+	for i in 1 8; do \
+	  install -d -m0755 '$(DIR)'/usr/share/man/man$$i; \
+	  for j in debian/djbdns-man/*.$$i; do \
+	    install -m0644 $$j '$(DIR)'/usr/share/man/man$$i/ && \
+	    gzip -9 '$(DIR)'/usr/share/man/man$$i/$${j##*/} || exit 1; \
+	  done; \
+	done
+	install -d -m0755 '$(DIRDBN)'/usr/share
+	cp -a '$(DIR)'/usr/share/man '$(DIRDBN)'/usr/share/man
+	# fix up directory permissions
+	chmod g-s '$(DIR)'/usr '$(DIR)'/usr/bin
+	chmod g-s '$(DIRDBN)'/usr '$(DIRDBN)'/usr/bin
+	# changelog
+	rm -f changelog && ln -s CHANGES changelog
+install-indep: deb-checkdir deb-checkuid
+	rm -rf '$(DIRCACHERUN)' '$(DIRTINYRUN)'
+	# dnscache-run
+	$(MAKE) -Cdnscache-run install DESTDIR='$(DIRCACHERUN)'
+	ln -s sv/dnscache '$(DIRCACHERUN)'/etc/dnscache
+	install -d -m0755 '$(DIRCACHERUN)'/var/log/dnscache
+	ln -s /var/log/dnscache '$(DIRCACHERUN)'/etc/sv/dnscache/log/main
+	# tinydns-run
+	$(MAKE) -Ctinydns-run install DESTDIR='$(DIRTINYRUN)'
+	ln -s sv/tinydns '$(DIRTINYRUN)'/etc/tinydns
+	install -d -m0755 '$(DIRTINYRUN)'/var/log/tinydns
+	ln -s /var/log/tinydns '$(DIRTINYRUN)'/etc/sv/tinydns/log/main
+
+binary: binary-indep binary-arch
+binary-arch: install-arch djbdns.deb dbndns.deb
+	rm -f debian/substvars
+	dpkg-shlibdeps '$(DIR)'/usr/bin/*
+	dpkg-gencontrol -isp -pdjbdns -P'$(DIR)'
+	dpkg -b '$(DIR)' ..
+	rm -f debian/substvars
+	dpkg-shlibdeps '$(DIRDBN)'/usr/bin/*
+	dpkg-gencontrol -isp -pdbndns -P'$(DIRDBN)'
+	dpkg -b '$(DIRDBN)' ..
+binary-indep: install-indep po-templates dnscache-run.deb tinydns-run.deb
+	dpkg-gencontrol -isp -pdnscache-run -P'$(DIRCACHERUN)'
+	dpkg -b '$(DIRCACHERUN)' ..
+	dpkg-gencontrol -isp -ptinydns-run -P'$(DIRTINYRUN)'
+	dpkg -b '$(DIRTINYRUN)' ..
+
+.PHONY: configure patch dbndns/patch build dbndns/build clean install \
+  ipo-templates binary-indep binary-arch binary
+
+include debian/implicit

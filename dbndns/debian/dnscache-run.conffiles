@@ -1,0 +1,10 @@
+/etc/sv/dnscache/env/CACHESIZE
+/etc/sv/dnscache/env/DATALIMIT
+/etc/sv/dnscache/env/IP
+/etc/sv/dnscache/env/IPSEND
+/etc/sv/dnscache/env/ROOT
+/etc/sv/dnscache/log/run
+/etc/sv/dnscache/log/status
+/etc/sv/dnscache/root/ip/127.0.0.1
+/etc/sv/dnscache/root/servers/@
+/etc/sv/dnscache/run

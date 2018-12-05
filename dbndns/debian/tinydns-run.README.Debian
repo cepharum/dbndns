@@ -1,0 +1,13 @@
+tinydns-run for Debian
+----------------------
+
+This package automatically sets up the djbdns package to provide a
+tinydns service.  The setup takes care of steps 1., 2., and 3.
+documented in
+ http://cr.yp.to/djbdns/run-server.html
+
+To setup your desired DNS data, continue with step 4. in this document.
+
+See http://cr.yp.to/djbdns.html for detailed documentation.
+
+ -- Gerrit Pape <pape@smarden.org>, Wed, 31 Mar 2010 00:41:33 +0000

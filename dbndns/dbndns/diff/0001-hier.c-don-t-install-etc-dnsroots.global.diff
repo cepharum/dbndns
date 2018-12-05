@@ -1,0 +1,30 @@
+From 77266cf2ef7d27559339a25c8bf21de4daf7e15b Mon Sep 17 00:00:00 2001
+From: Gerrit Pape <pape@smarden.org>
+Date: Mon, 12 Feb 2001 14:02:49 +0000
+Subject: [PATCH] hier.c: don't install /etc/dnsroots.global
+
+dnsroots.global is installed by debian/rules into debian/djbdns/etc/
+instead while building the Debian package.
+(cherry picked from commit e036abc40f9aefc13f06d944f0ec4b2230e9c28c)
+---
+ hier.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/hier.c b/hier.c
+index 4aef75b..b57dba0 100644
+--- a/hier.c
++++ b/hier.c
+@@ -2,7 +2,10 @@
+ 
+ void hier()
+ {
++/*
++  This file is installed by debian/rules in debian/tmp/etc
+   c("/","etc","dnsroots.global",-1,-1,0644);
++*/
+ 
+   h(auto_home,-1,-1,02755);
+   d(auto_home,"bin",-1,-1,02755);
+-- 
+1.6.2
+

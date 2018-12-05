@@ -1,0 +1,11 @@
+djbdns for Debian
+-----------------
+
+This package provides the djbdns programs, installed into /usr/bin/, and
+man pages.  When configuring and enabling djbdns services, please note
+that daemontools' default directory for services on Debian is
+/etc/service/, not /service/.
+
+See http://cr.yp.to/djbdns.html for detailed documentation.
+
+ -- Gerrit Pape <pape@smarden.org>, Wed, 09 Jan 2008 21:14:00 +0000

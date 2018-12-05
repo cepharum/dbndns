@@ -1,0 +1,88 @@
+Source: djbdns
+Section: net
+Priority: optional
+Maintainer: Gerrit Pape <pape@smarden.org>
+Build-Depends: po-debconf
+Standards-Version: 3.8.4.0
+
+Package: djbdns
+Architecture: any
+Depends: ${shlibs:Depends}
+Replaces: djbdns-doc
+Suggests: dnscache-run
+Recommends: daemontools, ucspi-tcp, daemontools-run | runit, make
+Description: a collection of Domain Name System tools
+ This package includes software for all the fundamental DNS operations:
+ .
+ DNS cache: finding addresses of Internet hosts.  When a browser wants to
+ contact www.hotwired.com, it first asks a DNS cache, such as djbdns's
+ dnscache, to find the IP address of www.hotwired.com.  Internet service
+ providers run dnscache to find IP addresses requested by their customers.
+ If you're running a home computer or a workstation, you can run your own
+ dnscache to speed up your web browsing.
+ .
+ DNS server: publishing addresses of Internet hosts.  The IP address of
+ www.hotwired.com is published by HotWired's DNS servers.  djbdns includes
+ a general-purpose DNS server, tinydns; network administrators run tinydns
+ to publish the IP addresses of their computers.  djbdns also includes
+ special-purpose servers for publishing DNS walls and RBLs.
+ .
+ DNS client: talking to a DNS cache.  djbdns includes a DNS client C
+ library and several command-line DNS client utilities.  Programmers use
+ these tools to send requests to DNS caches.
+ .
+ djbdns also includes several DNS debugging tools, notably dnstrace, which
+ administrators use to diagnose misconfigured remote servers.
+ .
+ See http://cr.yp.to/djbdns.html
+
+Package: dbndns
+Architecture: any
+Depends: ${shlibs:Depends}
+Replaces: djbdns-doc
+Recommends: daemontools, ucspi-tcp, daemontools-run | runit, make
+Conflicts: djbdns
+Provides: djbdns
+Suggests: dnscache-run
+Description: Debian fork of djbdns, a collection of Domain Name System tools
+ dbndns is a fork of the djbdns package, including patches requested by
+ Debian developers and Debian users, e.g. a patch to provide IPv6
+ functionality.
+ .
+ The djbdns package provides software for all the fundamental DNS
+ operations:
+ .
+ DNS cache: finding addresses of Internet hosts.  When a browser wants to
+ contact www.hotwired.com, it first asks a DNS cache, such as djbdns's
+ dnscache, to find the IP address of www.hotwired.com.  Internet service
+ providers run dnscache to find IP addresses requested by their customers.
+ If you're running a home computer or a workstation, you can run your own
+ dnscache to speed up your web browsing.
+ .
+ DNS server: publishing addresses of Internet hosts.  The IP address of
+ www.hotwired.com is published by HotWired's DNS servers.  djbdns includes
+ a general-purpose DNS server, tinydns; network administrators run tinydns
+ to publish the IP addresses of their computers.  djbdns also includes
+ special-purpose servers for publishing DNS walls and RBLs.
+ .
+ DNS client: talking to a DNS cache.  djbdns includes a DNS client C
+ library and several command-line DNS client utilities.  Programmers use
+ these tools to send requests to DNS caches.
+ .
+ djbdns also includes several DNS debugging tools, notably dnstrace, which
+ administrators use to diagnose misconfigured remote servers.
+
+Package: dnscache-run
+Architecture: all
+Depends: djbdns, daemontools, daemontools-run | runit, adduser
+Description: djbdns dnscache service
+ This package automatically sets up the djbdns package to provide a
+ dnscache service, listening on 127.0.0.1 by default.
+
+Package: tinydns-run
+Architecture: all
+Depends: djbdns, daemontools, daemontools-run | runit, adduser, debconf, net-tools
+Description: djbdns tinydns service
+ This package automatically sets up the djbdns package to provide a
+ tinydns service, listening on an IP address specified through the debconf
+ interface.

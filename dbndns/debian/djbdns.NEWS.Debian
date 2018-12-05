@@ -1,0 +1,33 @@
+djbdns (1:1.05-6) unstable; urgency=medium
+
+  CVE-2008-4392 reports 'Rapid DNS Poisoning in dnscache', the dnscache
+  program included in djbdns-1.05.  Upstream's comments on this can be
+  read in http://cr.yp.to/djbdns/forgery.html
+
+  The dbndns package, the Debian fork of djbdns, includes a patch that
+  limits concurrent outgoing SOA queries to 20 instead 200 (MAXUDP) to
+  make birthday attacks more difficult.
+
+ -- Gerrit Pape <pape@smarden.org>  Mon, 16 Mar 2009 23:00:06 +0000
+
+djbdns (1:1.05-1) unstable; urgency=low
+
+  With the djbdns package being put into the public domain by the
+  upstream author, djbdns is now available as binary package in
+  Debian/main.
+
+  Please note that this new binary package differs from the package
+  created through the djbdns-installer package available in
+  Debian/non-free; most notably this package depends on a different
+  version of the daemontools package, and installs the programs into
+  a different path (now /usr/bin/).  The latter change most probably
+  requires adapting the paths in the ./run scripts in already existing
+  service directories.
+  
+  If you don't want to upgrade to the new binary package, you should
+  stop the installation, and put djbdns on hold, as described in
+
+   http://www.debian.org/doc/FAQ/ch-pkg_basics.en.html#s-puttingonhold
+  
+ -- Gerrit Pape <pape@smarden.org>  Mon, 25 Feb 2008 21:44:02 +0000
+

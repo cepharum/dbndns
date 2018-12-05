@@ -1,0 +1,28 @@
+From ca61a385c7685e0470fb6b140439113fcdc9e74c Mon Sep 17 00:00:00 2001
+From: Shai Rosenfeld <shaiguitar@gmail.com>
+Date: Wed, 30 Sep 2009 18:50:32 +0000
+Subject: [PATCH] dnstracesort.sh: don't use deprecated "+number" sort(1) option
+
+dnstracesort contained the line "sort -t: +0 -2 +4 +3 -4 +2 -3" which
+uses the depracated sort field selection.  This commit changes the
+options to "-k": "sort -t: -k 1,3 -k 5 -k 4,5 -k 3,4".
+---
+ dnstracesort.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dnstracesort.sh b/dnstracesort.sh
+index e57359c..108ef2f 100644
+--- a/dnstracesort.sh
++++ b/dnstracesort.sh
+@@ -12,7 +12,7 @@ awk -F: '
+     }
+     print
+   }
+-' | sort -t: +0 -2 +4 +3 -4 +2 -3 | uniq | awk -F: '
++' | sort -t: -k 1,3 -k 5 -k 4,5 -k 3,4 | uniq | awk -F: '
+   {
+     type = $1
+     q = $2
+-- 
+1.6.0.3
+

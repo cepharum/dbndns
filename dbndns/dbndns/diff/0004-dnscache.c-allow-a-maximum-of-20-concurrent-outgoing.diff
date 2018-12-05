@@ -1,0 +1,79 @@
+From a7e94dd5f99a7e63af8fb2ce0406e294703814b7 Mon Sep 17 00:00:00 2001
+From: Gerrit Pape <pape@smarden.org>
+Date: Tue, 10 Mar 2009 13:35:38 +0000
+Subject: [PATCH] dnscache.c: allow a maximum of 20 concurrent outgoing SOA queries
+
+dnscache doesn't cache SOA records, and doesn't merge outgoing queries
+to the same servers.  This commit limits the concurrent outgoing SOA
+queries to 20 to make birthday attacks as described in CVE-2008-4392
+more difficult.
+---
+ dnscache.c |   15 +++++++++++++++
+ log.c      |    6 ++++++
+ 2 files changed, 21 insertions(+), 0 deletions(-)
+
+diff --git a/dnscache.c b/dnscache.c
+index abcba69..2366ecc 100644
+--- a/dnscache.c
++++ b/dnscache.c
+@@ -72,11 +72,15 @@ static struct udpclient {
+ } u[MAXUDP];
+ int uactive = 0;
+ 
++#define MAXSOA 20
++int soaactive = 0;
++
+ void u_drop(int j)
+ {
+   if (!u[j].active) return;
+   log_querydrop(&u[j].active);
+   u[j].active = 0; --uactive;
++  if (byte_equal(u[j].q.type,2,DNS_T_SOA)) --soaactive;
+ }
+ 
+ void u_respond(int j)
+@@ -87,6 +91,7 @@ void u_respond(int j)
+   socket_send6(udp53,response,response_len,u[j].ip,u[j].port,u[j].scope_id);
+   log_querydone(&u[j].active,response_len);
+   u[j].active = 0; --uactive;
++  if (byte_equal(u[j].q.type,2,DNS_T_SOA)) --soaactive;
+ }
+ 
+ void u_new(void)
+@@ -125,6 +130,16 @@ void u_new(void)
+ 
+   x->active = ++numqueries; ++uactive;
+   log_query(&x->active,x->ip,x->port,x->id,q,qtype);
++
++  if (byte_equal(qtype,2,DNS_T_SOA)) {
++    if (soaactive >= MAXSOA) {
++      log_querydropmaxsoa(&x->active);
++      x->active = 0; --uactive;
++      return;
++    }
++    ++soaactive;
++  }
++
+   switch(query_start(&x->q,q,qtype,qclass,myipoutgoing,interface)) {
+     case -1:
+       u_drop(j);
+diff --git a/log.c b/log.c
+index df465e2..a651607 100644
+--- a/log.c
++++ b/log.c
+@@ -118,6 +118,12 @@ void log_querydrop(uint64 *qnum)
+   line();
+ }
+ 
++void log_querydropmaxsoa(uint64 *qnum)
++{
++  string("drop "); number(*qnum); space(); string("maxsoa");
++  line();
++}
++
+ void log_tcpopen(const char client[16],unsigned int port)
+ {
+   string("tcpopen ");
+-- 
+1.6.2
+

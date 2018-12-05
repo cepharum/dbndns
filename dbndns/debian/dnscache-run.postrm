@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+test "$1" = 'purge' || exit 0
+
+svc -x /etc/sv/dnscache 2>/dev/null || :
+rm -rf /etc/sv/dnscache
+rm -rf /var/lib/supervise/dnscache /var/lib/supervise/dnscache.log
+for i in '@*' current config lock state; do
+  rm -f /var/log/dnscache/$i
+done
+rmdir /var/log/dnscache || :
+! getent passwd Gdnscache >/dev/null || userdel -f Gdnscache || :

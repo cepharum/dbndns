@@ -1,0 +1,248 @@
+djbdns (1:1.05-9~exp2) experimental; urgency=low
+
+  * add SRV support (closes: #682813)
+
+ -- Daniel Kahn Gillmor <dkg@fifthhorseman.net>  Tue, 21 May 2013 15:46:40 -0400
+
+djbdns (1:1.05-9~exp1) experimental; urgency=low
+
+  * debian/tinydns-run.postinst: do not rely on English locales when
+    parsing netstat output (closes: #586350).
+
+ -- intrigeri <intrigeri+debian@boum.org>  Tue, 25 Oct 2011 20:31:58 +0200
+
+djbdns (1:1.05-9~exp0) experimental; urgency=low
+
+  * tinydns-run/*, debian/tinydns-run.*, debian/po/: new binary package
+    tinydns-run.
+  * debian/control, debian/rules: build new binary package tinydns-run
+    (closes: #537223).
+  * debian/control: Standards-Version: 3.8.4.0.
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 31 Mar 2010 00:41:33 +0000
+
+djbdns (1:1.05-8) unstable; urgency=low
+
+  * debian/dbndns.README.Debian: copy information from
+    debian/djbdns.README.Debian (closes: #575473); clarify purpose of
+    the package.
+  * debian/control: dbndns: adapt long description to clarify the
+    purpose of the package.
+  * debian/dnscache-run.postrm: use -f option to deluser; don't complain
+    if dnscache service already is removed; no longer remove the Gdnslog
+    user on purge.
+
+ -- Gerrit Pape <pape@smarden.org>  Mon, 29 Mar 2010 23:53:46 +0000
+
+djbdns (1:1.05-7) unstable; urgency=low
+
+  * debian/dnscache-run.postinst: use the svc program instead of sv to
+    restart dnscache on upgrade (thx ben; closes: #528973).
+  * debian/diff/0003-dnstracesort.sh-don-t-use-deprecated...diff: new;
+    dnstracesort.sh: don't use deprecated "+number" sort(1) option (thx
+    Shai Rosenfeld; closes: #486935).
+  * debian/djbdns-man/*-conf.8: refer to the update-service(8) program
+    for enabling services, mark creating a symlink manually as example
+    (closes: #542613).
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 30 Sep 2009 19:49:20 +0000
+
+djbdns (1:1.05-6) unstable; urgency=medium
+
+  * dbndns/diff/0004-dnscache.c-allow-a-maximum-of-20-concurrent...diff:
+    new; dnscache.c: allow a maximum of 20 concurrent outgoing SOA
+    queries (#516394).
+  * debian/djbdns.NEWS.Debian: talk about the patch 0004-dnscache.c...
+    being applied to the dbndns package.
+  * debian/dnscache-run.postinst: restart dnscache on package upgrade.
+  * debian/dbndns.README.Debian: document that patches 0003-...diff,
+    0004-...dif are applied to dbndns.
+
+ -- Gerrit Pape <pape@smarden.org>  Mon, 16 Mar 2009 23:42:32 +0000
+
+djbdns (1:1.05-5) unstable; urgency=high
+
+  * debian/diff/0002-djbdns-misformats-some-long-response...diff: new;
+    djbdns misformats some long response packets; patch and example
+    attack (closes: #518169, #517631).
+  * dbndns/diff/0003-djbdns-misformats-some-long-response...diff: new;
+    djbdns misformats some long response packets; patch and example
+    attack (closes: #518169, #517631).
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 04 Mar 2009 15:55:50 +0000
+
+djbdns (1:1.05-4) unstable; urgency=medium
+
+  * debian/dnscache-run.postrm: use daemontools' svc program to take
+    down service (thx Javier Fernández-Sanguino Peña for the patch,
+    closes: #491503).
+  * debian/dnscache-run.preinst, debian/dnscache-run.postinst: create
+    seed file through dnscache-conf in postinst instead of preinst
+    (closes: #491343).
+  * debian/control: Standards-Version: 3.8.0.1.
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 13 Aug 2008 19:30:06 +0000
+
+djbdns (1:1.05-3) unstable; urgency=low
+
+  * debian/rules: build and install new package dbndns (based on patch
+    by Robert Edmonds, thx).
+  * debian/control: new package dbndns: Debian fork of djbdns (closes:
+    #472771).
+  * dbndns/diff/0001-hier.c-don-t-install-etc-dnsroots.global.diff,
+    dbndns/diff/0002-Apply-fefe-s-djbdns-1.05-test23-ipv6-patch.diff:
+    new; hier.c: don't install /etc/dnsroots.global; apply fefe's
+    djbdns-1.05-test23 ipv6 patch.
+  * debian/dbndns.conffiles: new; /etc/dnsroots.global.
+  * debian/djbdns.NEWS.Debian: no longer talk about djbdns-installer
+    still being available, it's been removed from sid.
+  * debian/dbndns.README.Debian: new; document what patches are applied.
+  * dnscache-run/*: new; sources for new dnscache-run package.
+  * debian/dnscache-run.postinst, debian/dnscache-run.postrm,
+    debian/dnscache-run.preinst, debian/dnscache-run.prerm: new; handle
+    dnscache service.
+  * debian/dnscache-run.conffiles: new.
+  * debian/rules: build and install new package dnscache-run.
+  * debian/control: new package dnscache-run: djbdns dnscache service.
+  * debian/dnscache-run.README.Debian: new.
+  * debian/control: packages djbdns, dbndns: Suggests: dnscache-run.
+
+ -- Gerrit Pape <pape@smarden.org>  Tue, 13 May 2008 20:58:56 +0000
+
+djbdns (1:1.05-2) unstable; urgency=low
+
+  * debian/djbdns.NEWS.Debian: add note that ./run scripts in already
+    existing service directories most probably need to be adapted when
+    upgrading from << 1:1.05.
+  * debian/control: Standards-Version: 3.7.3.0.
+
+ -- Gerrit Pape <pape@smarden.org>  Sun, 02 Mar 2008 23:22:04 +0000
+
+djbdns (1:1.05-1) unstable; urgency=low
+
+  * debian/implicit: add proper dependencies to support 'parallel build'
+    through make -j (thx Daniel Schepler for the patch).
+  * debian/changelog: add epoch 1 to supersede unofficial package.
+  * debian/rules: remove target configure:; use glibc by default instead
+    of dietlibc; install programs into /usr/bin/.
+  * debian/gcc/: remove; obsolete.
+  * debian/control: no longer Build-Depends: dietlibc-dev.
+  * debian/rules: run dpkg-shlibdeps; remove debian/substvars in target
+    clean:.
+  * debian/rules: use 'gcc -O2 -g -include /usr/include/errno.h' for
+    conf-cc.
+  * debian/diff/0001-hier.c-don-t-install-etc-dnsroots.global.diff: new;
+    hier.c: don't install /etc/dnsroots.global.
+  * debian/rules: new target patch: apply patches from debian/diff/;
+    reverse apply in target clean:.
+  * debian/rules: target install: force-remove install, instcheck before
+    rebuilding to avoid race.
+  * debian/rules: fix up directory permissions /usr/, /usr/bin/.
+  * debian/control: remove reference to unofficial packages from the
+    description.
+  * debian/control: no longer Recommends: djbdns-doc; no longer Depends:
+    daemontools, ucspi-tcp, make, but Recommends: them; Recommends:
+    daemontools-run | runit; Depends: ${shlibs:Depends}.
+  * debian/djbdns-man/: new; add manpages downloaded from
+    http://smarden.org/pape/djb/manpages/djbdns-1.05-man-20031023.tar.gz.
+  * debian/rules: install manpages from debian/djbdns-man/ into
+    /usr/share/man/man1/ and /usr/share/man/man8/.
+  * debian/copyright: rewrite copyright.
+  * debian/djbdns.README.Debian: redo.
+  * debian/control: Standards-Version: 3.7.2.2.
+  * debian/rules: install updated debian/dnsroots.global, instead of
+    upstream's.
+  * debian/control: update short and long description.
+  * upload to Debian/main (closes: #453680).
+  * debian/djbdns.README.Debian: add note about daemontools' default
+    directory for services is /etc/service/.
+  * debian/djbdns.NEWS.Debian: new; package introduced to Debian/main,
+    mention how to put on hold if upgrade from non-free is not desired.
+  * debian/djbdns-man/dnsipq.1, debian/djbdns-man/dnstxt.1: typo.
+  * debian/control: Replaces: djbdns-doc.
+
+ -- Gerrit Pape <pape@smarden.org>  Tue, 26 Feb 2008 20:54:59 +0000
+
+djbdns (1.05-zarge2) sarge; urgency=low
+
+  * build against sarge's dietlibc-dev (0.28-3).
+
+ -- Gerrit Pape <pape@smarden.org>  Thu, 26 May 2005 19:03:38 +0000
+
+djbdns (1.05-zarge1) sarge; urgency=low
+
+  * debian/rules: minor cleanup.
+  * debian/implicit: update to revision 1.10.
+  * debian/djbdns.conffiles: new; /etc/dnsroots.global.
+  * debian/control: typo in description.
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 18 Aug 2004 14:35:29 +0000
+
+djbdns (1.05-zarge0.4) sarge; urgency=low
+
+  * debian/control: Depends: make (thx Thomas Mangin); no longer
+    Build-Depends: dephelper; remove Standards-Version.
+  * debian/rules: stop using debhelper, use implicit rules.
+  * debian/implicit: new; implicit Makefile rules.
+  * debian/README.Debian, debian/docs: rename to debian/ucspi-tcp.*.
+  * debian/dirs: remove; obsolete.
+  * debian/copyright: minor.
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 10 Mar 2004 08:23:22 +0000
+
+djbdns (1.05-zarge0.2) sarge; urgency=low
+
+  * use diet libc.
+  * debian/rules: set up diet program as c compiler wrapper; conditionally
+    overwrite PATH to have diet program used as c compiler wrapper; minor
+    cleanup.
+  * debian/gcc/gcc*: new; diet program as c compiler wrapper.
+  * debian/control: Build-Depends: dietlibc-dev; no longer Depends:
+    ${shlibs:Depends}; minor cleanup.
+
+ -- Gerrit Pape <pape@smarden.org>  Wed, 12 Nov 2003 13:19:10 +0000
+
+djbdns (1.05-woody1) woody; urgency=low
+
+  * bump version for release.
+
+ -- Gerrit Pape <pape@smarden.org>  Tue,  9 Jul 2002 11:05:16 +0200
+
+djbdns (1.05-woody0.1) woody; urgency=low
+
+  * woody package; new Standards-Version: 3.5.2.
+
+ -- Gerrit Pape <pape@smarden.org>  Mon, 15 Oct 2001 11:49:50 +0200
+
+djbdns (1.05-1) stable; urgency=low
+
+  * new upstream version 1.05.
+  * switched to _recommend_ djbdns-doc (not depend on).
+  * dist stable.
+
+ -- Gerrit Pape <pape@innominate.com>  Mon, 12 Feb 2001 14:55:09 +0100
+
+djbdns (1.04-1) unstable; urgency=low
+
+  * new upstream version 1.04.
+
+ -- Gerrit Pape <pape@innominate.com>  Mon, 22 Jan 2001 10:50:51 +0100
+
+djbdns (1.03-1) unstable; urgency=low
+
+  * new upstream version 1.03.
+
+ -- Gerrit Pape <pape@innominate.com>  Mon,  8 Jan 2001 23:29:43 +0100
+
+djbdns (1.02-0.2) unstable; urgency=low
+
+  * dependencies, cleanup.
+
+ -- Gerrit Pape <pape@innominate.com>  Mon, 18 Dec 2000 11:32:59 +0100
+
+djbdns (1.02-0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Gerrit Pape <pape@innominate.de>  Wed,  8 Nov 2000 10:21:36 +0100
+

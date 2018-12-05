@@ -1,0 +1,20 @@
+dnscache-run for Debian
+-----------------------
+
+This package automatically sets up the djbdns package to provide a
+dnscache service.  By default the dnscache service listens on
+127.0.0.1:53, and /etc/resolv.conf is adjusted accordingly.
+
+To make the dnscache service available to other machines, you can
+change the IP dnscache should listen on by changing the configuration
+in /etc/dnscache/, e.g.
+
+ # echo 192.168.0.1 >/etc/dnscache/env/IP
+ # touch /etc/dnscache/root/ip/192.168.0
+ # svc -t /etc/service/dnscache
+ # perl -p -i -e 's/nameserver 127.0.0.1/nameserver 192.168.0.1/' \
+   /etc/resolv.conf
+
+See http://cr.yp.to/djbdns.html for detailed documentation.
+
+ -- Gerrit Pape <pape@smarden.org>, Tue, 13 May 2008 18:56:32 +0000

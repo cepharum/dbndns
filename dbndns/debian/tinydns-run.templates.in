@@ -1,0 +1,31 @@
+Template: tinydns-run/listenip
+Type: string
+Default: 127.0.0.1
+Description: IP address of the tinydns DNS service:
+ Specify the IP address for the tinydns DNS service.
+ .
+ The IP address must be configured on this computer.  The IP address
+ must not have a DNS cache or any other port-53 service.  One computer
+ can run a DNS server alongside a DNS cache as long as they are on
+ separate IP addresses.  The standard setup for small networks is to
+ put a DNS cache on a private address such as 127.0.0.1 or 10.53.0.1,
+ and a DNS server on a public address.
+ .
+ Please read
+  http://cr.yp.to/djbdns/run-server.html
+
+Template: tinydns-run/badip
+Type: boolean
+Default: true
+Description: Do you want to try again?
+ The IP address you entered is not valid, or it's not configured on this
+ computer.
+
+Template: tinydns-run/usedip
+Type: boolean
+Default: true
+Description: Do you want to try again?
+ There's already a service running on this IP address, UDP and/or TCP
+ port 53.  To see which program is listening on this socket, run
+ .
+  # netstat -lnp |grep -F :53

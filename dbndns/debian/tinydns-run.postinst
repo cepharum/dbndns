@@ -1,0 +1,63 @@
+#!/bin/sh
+set -e
+
+test "$1" = configure || test "$1" = reconfigure || exit 0
+
+. /usr/share/debconf/confmodule
+
+abortinst() {
+  cat >&2 <<-\EOT
+	
+	Configuration of tinydns-run through debconf aborted.  Try to run
+	 # dpkg --configure tinydns-run
+	
+	To remove the tinydns-run package, run
+	 # dpkg --purge tinydns-run
+
+	EOT
+  exit 1
+}
+
+while :; do
+  db_get tinydns-run/listenip
+  IP=${RET%%,*}
+
+  test -z "$IP" || test "$IP" != "$(head -n1 /etc/sv/tinydns/env/IP)" || break
+
+  GOOD=$(LC_ALL=C netstat -ie |grep -F " inet addr:$IP " || :)
+  USED=$(netstat -ln |grep -F " $IP:53 " || :)
+
+  case "$IP,$GOOD,$USED" in
+  ,*,*|*,,*)
+    db_input high tinydns-run/badip || :
+    db_go || :
+    db_fset tinydns-run/badip seen false
+    db_get tinydns-run/badip
+    test "$RET" = true || abortinst
+    ;;
+  *,*,?*)
+    db_input high tinydns-run/usedip || :
+    db_go || :
+    db_fset tinydns-run/usedip seen false
+    db_get tinydns-run/usedip
+    test "$RET" = true || abortinst
+    ;;
+  *)
+    echo "$IP" >/etc/sv/tinydns/env/IP
+    svok /etc/service/tinydns 2>/dev/null || break
+    echo 'Restarting tinydns service...' 1>&2
+    svc -t /etc/service/tinydns
+    break
+    ;;
+  esac
+
+  db_fset tinydns-run/listenip seen false
+  db_input high tinydns-run/listenip || :
+  db_go || :
+done
+
+test -e /etc/service/tinydns || update-service --add /etc/sv/tinydns 1>&2
+
+test -z "$2" || exit 0
+
+chown Gdnslog:adm /var/log/tinydns

@@ -1,0 +1,12 @@
+/etc/sv/tinydns/env/IP
+/etc/sv/tinydns/env/ROOT
+/etc/sv/tinydns/log/run
+/etc/sv/tinydns/log/status
+/etc/sv/tinydns/root/add-alias
+/etc/sv/tinydns/root/add-childns
+/etc/sv/tinydns/root/add-host
+/etc/sv/tinydns/root/add-mx
+/etc/sv/tinydns/root/add-ns
+/etc/sv/tinydns/root/Makefile
+/etc/sv/tinydns/root/data
+/etc/sv/tinydns/run

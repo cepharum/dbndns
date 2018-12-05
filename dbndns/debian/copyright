@@ -1,0 +1,20 @@
+This package was debianized by Gerrit Pape <pape@smarden.org> on
+Mon,  8 Jan 2001 23:29:43 +0100.
+
+It was downloaded from
+ http://cr.yp.to/djbdns/djbdns-1.05.tar.gz
+
+The man-pages in debian/djbdns-man/ were downloaded from
+ http://smarden.org/pape/djb/manpages/djbdns-1.05-man-20031023.tar.gz
+
+Upstream Author: D. J. Bernstein <djb@cr.yp.to>
+
+Copyright:
+
+D. J. Bernstein placed the djbdns package into the public domain.
+From http://cr.yp.to/distributors.html
+ 2007.12.28: I hereby place the djbdns package (in particular,
+ djbdns-1.05.tar.gz, with MD5 checksum 3147c5cd56832aa3b41955c7a51cbeb2)
+ into the public domain. The package is no longer copyrighted.
+
+The Debian diff is in the public domain.

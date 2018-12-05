@@ -1,0 +1,23 @@
+dbndns for Debian
+-----------------
+
+dbndns is a Debian fork of the djbdns package, it includes the following
+patches:
+
+ * IPv6 patch: djbdns-1.05-test23.diff.bz2 from
+     http://www.fefe.de/dns/
+ * long response packets misformat patch from
+     http://shinobi.dempsky.org/~matthew/djbdns-bug/patch
+ * maxsoa patch from
+     http://smarden.org/pape/Debian/dbndns/maxsoa.diff
+
+This package can be used as an alternative to the djbdns package.  It
+provides the same programs as the djbdns package, installed into
+/usr/bin/, and man pages.  When configuring and enabling dns services,
+please note that daemontools' default directory for services on Debian
+is /etc/service/, not /service/.
+
+See http://cr.yp.to/djbdns.html and the URLs above for detailed
+documentation.
+
+ -- Gerrit Pape <pape@smarden.org>  Mon, 16 Mar 2009 23:42:32 +0000
