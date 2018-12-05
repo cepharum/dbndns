@@ -1,0 +1,11 @@
+# files created by make
+*.o
+*.a
+choose
+compile
+hasdevtcp.h
+load
+makelib
+systype
+uint32.h
+uint64.h
