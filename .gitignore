@@ -1,11 +1,11 @@
 # files created by make
-*.o
-*.a
-choose
-compile
-hasdevtcp.h
-load
-makelib
-systype
-uint32.h
-uint64.h
+src/*.o
+src/*.a
+src/choose
+src/compile
+src/hasdevtcp.h
+src/load
+src/makelib
+src/systype
+src/uint32.h
+src/uint64.h
