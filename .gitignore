@@ -1,3 +1,5 @@
+.idea
+
 # ignore all build targets listed in file TARGETS
 load
 compile
