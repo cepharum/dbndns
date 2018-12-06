@@ -2,7 +2,10 @@
 
 void hier()
 {
+/*
+  This file is installed by debian/rules in debian/tmp/etc
   c("/","etc","dnsroots.global",-1,-1,0644);
+*/
 
   h(auto_home,-1,-1,02755);
   d(auto_home,"bin",-1,-1,02755);
@@ -29,7 +32,9 @@ void hier()
   c(auto_home,"bin","axfr-get",-1,-1,0755);
 
   c(auto_home,"bin","dnsip",-1,-1,0755);
+  c(auto_home,"bin","dnsip6",-1,-1,0755);
   c(auto_home,"bin","dnsipq",-1,-1,0755);
+  c(auto_home,"bin","dnsip6q",-1,-1,0755);
   c(auto_home,"bin","dnsname",-1,-1,0755);
   c(auto_home,"bin","dnstxt",-1,-1,0755);
   c(auto_home,"bin","dnsmx",-1,-1,0755);
