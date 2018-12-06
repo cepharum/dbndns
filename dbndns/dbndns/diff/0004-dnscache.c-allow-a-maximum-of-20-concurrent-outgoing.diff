@@ -12,10 +12,10 @@ more difficult.
  log.c      |    6 ++++++
  2 files changed, 21 insertions(+), 0 deletions(-)
 
-diff --git a/dnscache.c b/dnscache.c
+diff --git a/src/dnscache.c b/src/dnscache.c
 index abcba69..2366ecc 100644
---- a/dnscache.c
-+++ b/dnscache.c
+--- a/src/dnscache.c
++++ b/src/dnscache.c
 @@ -72,11 +72,15 @@ static struct udpclient {
  } u[MAXUDP];
  int uactive = 0;
@@ -57,10 +57,10 @@ index abcba69..2366ecc 100644
    switch(query_start(&x->q,q,qtype,qclass,myipoutgoing,interface)) {
      case -1:
        u_drop(j);
-diff --git a/log.c b/log.c
+diff --git a/src/log.c b/src/log.c
 index df465e2..a651607 100644
---- a/log.c
-+++ b/log.c
+--- a/src/log.c
++++ b/src/log.c
 @@ -118,6 +118,12 @@ void log_querydrop(uint64 *qnum)
    line();
  }

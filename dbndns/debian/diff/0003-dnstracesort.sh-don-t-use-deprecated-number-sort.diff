@@ -10,10 +10,10 @@ options to "-k": "sort -t: -k 1,3 -k 5 -k 4,5 -k 3,4".
  dnstracesort.sh |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/dnstracesort.sh b/dnstracesort.sh
+diff --git a/src/dnstracesort.sh b/src/dnstracesort.sh
 index e57359c..108ef2f 100644
---- a/dnstracesort.sh
-+++ b/dnstracesort.sh
+--- a/src/dnstracesort.sh
++++ b/src/dnstracesort.sh
 @@ -12,7 +12,7 @@ awk -F: '
      }
      print

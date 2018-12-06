@@ -9,10 +9,10 @@ instead while building the Debian package.
  hier.c |    3 +++
  1 files changed, 3 insertions(+), 0 deletions(-)
 
-diff --git a/hier.c b/hier.c
+diff --git a/src/hier.c b/src/hier.c
 index 4aef75b..b57dba0 100644
---- a/hier.c
-+++ b/hier.c
+--- a/src/hier.c
++++ b/src/hier.c
 @@ -2,7 +2,10 @@
  
  void hier()

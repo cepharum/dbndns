@@ -95,10 +95,10 @@ my web server might hack his computer.)
  response.c |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/response.c b/response.c
+diff --git a/src/response.c b/src/response.c
 index ba90c89..33b2fb1 100644
---- a/response.c
-+++ b/response.c
+--- a/src/response.c
++++ b/src/response.c
 @@ -34,7 +34,7 @@ int response_addname(const char *d)
          uint16_pack_big(buf,49152 + name_ptr[i]);
          return response_addbytes(buf,2);

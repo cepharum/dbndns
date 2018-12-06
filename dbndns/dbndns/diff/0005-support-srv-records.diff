@@ -25,9 +25,9 @@ packet, and which can't be correctly loaded into data.cdb by tinydns-data.
 
 Laurent G. Bercot <ska-djbdns@skarnet.org> updated it for djbdns-1.05:
 
-diff -rNU3 djbdns-1.05/axfr-get.c djbdns-1.05-srv/axfr-get.c
---- djbdns-1.05/axfr-get.c	Sun Feb 11 22:11:45 2001
-+++ djbdns-1.05-srv/axfr-get.c	Thu Oct 18 14:46:56 2001
+diff -rNU3 djbdns-1.05/src/axfr-get.c djbdns-1.05-srv/src/axfr-get.c
+--- djbdns-1.05/src/axfr-get.c	Sun Feb 11 22:11:45 2001
++++ djbdns-1.05-srv/src/axfr-get.c	Thu Oct 18 14:46:56 2001
 @@ -209,6 +209,26 @@
      if (!stralloc_cats(&line,".:")) return 0;
      if (!stralloc_catulong0(&line,dist,0)) return 0;
@@ -70,9 +70,9 @@ diff -rNU3 djbdns-1.05/axfr-get.c djbdns-1.05-srv/axfr-get.c
    }
    else {
      unsigned char ch;
-diff -rNU3 djbdns-1.05/dns.h djbdns-1.05-srv/dns.h
---- djbdns-1.05/dns.h	Sun Feb 11 22:11:45 2001
-+++ djbdns-1.05-srv/dns.h	Thu Oct 18 14:46:56 2001
+diff -rNU3 djbdns-1.05/src/dns.h djbdns-1.05-srv/src/dns.h
+--- djbdns-1.05/src/dns.h	Sun Feb 11 22:11:45 2001
++++ djbdns-1.05-srv/src/dns.h	Thu Oct 18 14:46:56 2001
 @@ -20,6 +20,7 @@
  #define DNS_T_SIG "\0\30"
  #define DNS_T_KEY "\0\31"
@@ -81,9 +81,9 @@ diff -rNU3 djbdns-1.05/dns.h djbdns-1.05-srv/dns.h
  #define DNS_T_AXFR "\0\374"
  #define DNS_T_ANY "\0\377"
  
-diff -rNU3 djbdns-1.05/tinydns-data.c djbdns-1.05-srv/tinydns-data.c
---- djbdns-1.05/tinydns-data.c	Sun Feb 11 22:11:45 2001
-+++ djbdns-1.05-srv/tinydns-data.c	Thu Oct 18 14:50:53 2001
+diff -rNU3 djbdns-1.05/src/tinydns-data.c djbdns-1.05-srv/src/tinydns-data.c
+--- djbdns-1.05/src/tinydns-data.c	Sun Feb 11 22:11:45 2001
++++ djbdns-1.05-srv/src/tinydns-data.c	Thu Oct 18 14:50:53 2001
 @@ -196,6 +196,7 @@
    char type[2];
    char soa[20];

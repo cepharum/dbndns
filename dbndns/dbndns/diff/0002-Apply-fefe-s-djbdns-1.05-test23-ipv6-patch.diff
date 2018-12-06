@@ -142,10 +142,10 @@ somewhere.  (News July 2002: The IEFT really has seen the light)
  create mode 100644 tryn2i.c
  create mode 100644 trysa6.c
 
-diff --git a/FILES b/FILES
+diff --git a/src/FILES b/src/FILES
 index 7adf6d4..27a4e26 100644
---- a/FILES
-+++ b/FILES
+--- a/src/FILES
++++ b/src/FILES
 @@ -135,6 +135,7 @@ error_str.c
  exit.h
  fmt.h
@@ -182,10 +182,10 @@ index 7adf6d4..27a4e26 100644
 +tryn2i.c
 +haven2i.h1
 +haven2i.h2
-diff --git a/Makefile b/Makefile
+diff --git a/src/Makefile b/src/Makefile
 index 1429643..44bd989 100644
---- a/Makefile
-+++ b/Makefile
+--- a/src/Makefile
++++ b/src/Makefile
 @@ -120,12 +120,14 @@ makelib byte_chr.o byte_copy.o byte_cr.o byte_diff.o byte_zero.o \
  case_diffb.o case_diffs.o case_lowerb.o fmt_ulong.o ip4_fmt.o \
  ip4_scan.o scan_ulong.o str_chr.o str_diff.o str_len.o str_rchr.o \
@@ -549,10 +549,10 @@ index 1429643..44bd989 100644
 +
 +clean:
 +	rm -f `cat TARGETS`
-diff --git a/TARGETS b/TARGETS
+diff --git a/src/TARGETS b/src/TARGETS
 index 2490b1a..afc4c49 100644
---- a/TARGETS
-+++ b/TARGETS
+--- a/src/TARGETS
++++ b/src/TARGETS
 @@ -102,6 +102,7 @@ dns_domain.o
  dns_dtda.o
  dns_ip.o
@@ -596,10 +596,10 @@ index 2490b1a..afc4c49 100644
 +socket_accept6.o
 +socket_connect6.o
 +socket_tcp6.o
-diff --git a/axfr-get.c b/axfr-get.c
+diff --git a/src/axfr-get.c b/src/axfr-get.c
 index 75db627..f6bf5bd 100644
---- a/axfr-get.c
-+++ b/axfr-get.c
+--- a/src/axfr-get.c
++++ b/src/axfr-get.c
 @@ -13,6 +13,7 @@
  #include "byte.h"
  #include "str.h"
@@ -623,10 +623,10 @@ index 75db627..f6bf5bd 100644
    else {
      unsigned char ch;
      unsigned char ch2;
-diff --git a/dns.h b/dns.h
+diff --git a/src/dns.h b/src/dns.h
 index 2f899ef..5398e2b 100644
---- a/dns.h
-+++ b/dns.h
+--- a/src/dns.h
++++ b/src/dns.h
 @@ -35,7 +35,8 @@ struct dns_transmit {
    struct taia deadline;
    unsigned int pos;
@@ -673,11 +673,11 @@ index 2f899ef..5398e2b 100644
 +#define DNS_NAME6_DOMAIN (4*16+11)
  
  #endif
-diff --git a/dns_ip6.c b/dns_ip6.c
+diff --git a/src/dns_ip6.c b/src/dns_ip6.c
 new file mode 100644
 index 0000000..30ce699
 --- /dev/null
-+++ b/dns_ip6.c
++++ b/src/dns_ip6.c
 @@ -0,0 +1,103 @@
 +#include "stralloc.h"
 +#include "uint16.h"
@@ -782,11 +782,11 @@ index 0000000..30ce699
 +  out->len &= ~3;
 +  return 0;
 +}
-diff --git a/dns_ipq6.c b/dns_ipq6.c
+diff --git a/src/dns_ipq6.c b/src/dns_ipq6.c
 new file mode 100644
 index 0000000..d5cea12
 --- /dev/null
-+++ b/dns_ipq6.c
++++ b/src/dns_ipq6.c
 @@ -0,0 +1,72 @@
 +#include "stralloc.h"
 +#include "case.h"
@@ -860,10 +860,10 @@ index 0000000..d5cea12
 +  if (dns_resolvconfrewrite(&rules) == -1) return -1;
 +  return dns_ip6_qualify_rules(out,fqdn,in,&rules);
 +}
-diff --git a/dns_name.c b/dns_name.c
+diff --git a/src/dns_name.c b/src/dns_name.c
 index 6f7cdc3..518a0c0 100644
---- a/dns_name.c
-+++ b/dns_name.c
+--- a/src/dns_name.c
++++ b/src/dns_name.c
 @@ -2,6 +2,7 @@
  #include "uint16.h"
  #include "byte.h"
@@ -897,11 +897,11 @@ index 6f7cdc3..518a0c0 100644
 +  if (!out->len) return dns_name6_inner(out,ip,DNS_IP6_INT);
 +  return 0;
 +}
-diff --git a/dns_nd6.c b/dns_nd6.c
+diff --git a/src/dns_nd6.c b/src/dns_nd6.c
 new file mode 100644
 index 0000000..6dbeb89
 --- /dev/null
-+++ b/dns_nd6.c
++++ b/src/dns_nd6.c
 @@ -0,0 +1,35 @@
 +#include "byte.h"
 +#include "fmt.h"
@@ -938,10 +938,10 @@ index 0000000..6dbeb89
 +  return 4*16+9+t;
 +}
 +
-diff --git a/dns_rcip.c b/dns_rcip.c
+diff --git a/src/dns_rcip.c b/src/dns_rcip.c
 index 97bd8f5..efd1b21 100644
---- a/dns_rcip.c
-+++ b/dns_rcip.c
+--- a/src/dns_rcip.c
++++ b/src/dns_rcip.c
 @@ -2,12 +2,13 @@
  #include "openreadclose.h"
  #include "byte.h"
@@ -1016,10 +1016,10 @@ index 97bd8f5..efd1b21 100644
 +  byte_copy(s,256,ip);
    return 0;
  }
-diff --git a/dns_resolve.c b/dns_resolve.c
+diff --git a/src/dns_resolve.c b/src/dns_resolve.c
 index 8bdea0d..82b5bbb 100644
---- a/dns_resolve.c
-+++ b/dns_resolve.c
+--- a/src/dns_resolve.c
++++ b/src/dns_resolve.c
 @@ -2,6 +2,7 @@
  #include "taia.h"
  #include "byte.h"
@@ -1043,11 +1043,11 @@ index 8bdea0d..82b5bbb 100644
  
    for (;;) {
      taia_now(&stamp);
-diff --git a/dns_sortip6.c b/dns_sortip6.c
+diff --git a/src/dns_sortip6.c b/src/dns_sortip6.c
 new file mode 100644
 index 0000000..7e752e9
 --- /dev/null
-+++ b/dns_sortip6.c
++++ b/src/dns_sortip6.c
 @@ -0,0 +1,20 @@
 +#include "byte.h"
 +#include "dns.h"
@@ -1069,10 +1069,10 @@ index 0000000..7e752e9
 +    byte_copy(s + (n << 4),16,tmp);
 +  }
 +}
-diff --git a/dns_transmit.c b/dns_transmit.c
+diff --git a/src/dns_transmit.c b/src/dns_transmit.c
 index 4d6e39f..cba1fd2 100644
---- a/dns_transmit.c
-+++ b/dns_transmit.c
+--- a/src/dns_transmit.c
++++ b/src/dns_transmit.c
 @@ -7,6 +7,7 @@
  #include "byte.h"
  #include "uint16.h"
@@ -1156,10 +1156,10 @@ index 4d6e39f..cba1fd2 100644
  
    d->udploop = flagrecursive ? 1 : 0;
  
-diff --git a/dnscache.c b/dnscache.c
+diff --git a/src/dnscache.c b/src/dnscache.c
 index 8c899a3..abcba69 100644
---- a/dnscache.c
-+++ b/dnscache.c
+--- a/src/dnscache.c
++++ b/src/dnscache.c
 @@ -5,6 +5,7 @@
  #include "strerr.h"
  #include "error.h"
@@ -1344,10 +1344,10 @@ index 8c899a3..abcba69 100644
    if (env_get("HIDETTL"))
      response_hidettl();
    if (env_get("FORWARDONLY"))
-diff --git a/dnsfilter.c b/dnsfilter.c
+diff --git a/src/dnsfilter.c b/src/dnsfilter.c
 index 9e6863a..822ff1e 100644
---- a/dnsfilter.c
-+++ b/dnsfilter.c
+--- a/src/dnsfilter.c
++++ b/src/dnsfilter.c
 @@ -12,6 +12,7 @@
  #include "iopause.h"
  #include "error.h"
@@ -1374,11 +1374,11 @@ index 9e6863a..822ff1e 100644
  	        errout(xnum);
  	      else {
  	        x[xnum].flagactive = 1;
-diff --git a/dnsip6.c b/dnsip6.c
+diff --git a/src/dnsip6.c b/src/dnsip6.c
 new file mode 100644
 index 0000000..5b65823
 --- /dev/null
-+++ b/dnsip6.c
++++ b/src/dnsip6.c
 @@ -0,0 +1,40 @@
 +#include "buffer.h"
 +#include "exit.h"
@@ -1420,11 +1420,11 @@ index 0000000..5b65823
 +  buffer_flush(buffer_1);
 +  _exit(0);
 +}
-diff --git a/dnsip6q.c b/dnsip6q.c
+diff --git a/src/dnsip6q.c b/src/dnsip6q.c
 new file mode 100644
 index 0000000..82ab04e
 --- /dev/null
-+++ b/dnsip6q.c
++++ b/src/dnsip6q.c
 @@ -0,0 +1,43 @@
 +#include "buffer.h"
 +#include "exit.h"
@@ -1469,10 +1469,10 @@ index 0000000..82ab04e
 +  buffer_flush(buffer_1);
 +  _exit(0);
 +}
-diff --git a/dnsname.c b/dnsname.c
+diff --git a/src/dnsname.c b/src/dnsname.c
 index 0e5eb26..ff9166d 100644
---- a/dnsname.c
-+++ b/dnsname.c
+--- a/src/dnsname.c
++++ b/src/dnsname.c
 @@ -2,6 +2,7 @@
  #include "exit.h"
  #include "strerr.h"
@@ -1509,10 +1509,10 @@ index 0e5eb26..ff9166d 100644
  
      buffer_put(buffer_1,out.s,out.len);
      buffer_puts(buffer_1,"\n");
-diff --git a/dnsq.c b/dnsq.c
+diff --git a/src/dnsq.c b/src/dnsq.c
 index 533e6af..9e89efe 100644
---- a/dnsq.c
-+++ b/dnsq.c
+--- a/src/dnsq.c
++++ b/src/dnsq.c
 @@ -10,6 +10,7 @@
  #include "printpacket.h"
  #include "parsetype.h"
@@ -1560,10 +1560,10 @@ index 533e6af..9e89efe 100644
    byte_copy(servers,ip.len,ip.s);
  
    if (!stralloc_copys(&out,"")) oops();
-diff --git a/dnstrace.c b/dnstrace.c
+diff --git a/src/dnstrace.c b/src/dnstrace.c
 index 3f2159b..1d331bd 100644
---- a/dnstrace.c
-+++ b/dnstrace.c
+--- a/src/dnstrace.c
++++ b/src/dnstrace.c
 @@ -4,6 +4,7 @@
  #include "str.h"
  #include "byte.h"
@@ -1728,10 +1728,10 @@ index 3f2159b..1d331bd 100644
      if (!stralloc_cats(&querystr,":")) nomem();
  
      buffer_put(buffer_1,querystr.s,querystr.len);
-diff --git a/error.h b/error.h
+diff --git a/src/error.h b/src/error.h
 index 35c976e..9cdd527 100644
---- a/error.h
-+++ b/error.h
+--- a/src/error.h
++++ b/src/error.h
 @@ -1,7 +1,7 @@
  #ifndef ERROR_H
  #define ERROR_H
@@ -1741,11 +1741,11 @@ index 35c976e..9cdd527 100644
  
  extern int error_intr;
  extern int error_nomem;
-diff --git a/fmt_xlong.c b/fmt_xlong.c
+diff --git a/src/fmt_xlong.c b/src/fmt_xlong.c
 new file mode 100644
 index 0000000..332fc9a
 --- /dev/null
-+++ b/fmt_xlong.c
++++ b/src/fmt_xlong.c
 @@ -0,0 +1,22 @@
 +#include "fmt.h"
 +
@@ -1769,38 +1769,38 @@ index 0000000..332fc9a
 +  }
 +  return len;
 +}
-diff --git a/haveip6.h1 b/haveip6.h1
+diff --git a/src/haveip6.h1 b/src/haveip6.h1
 new file mode 100644
 index 0000000..8b13789
 --- /dev/null
-+++ b/haveip6.h1
++++ b/src/haveip6.h1
 @@ -0,0 +1 @@
 +
-diff --git a/haveip6.h2 b/haveip6.h2
+diff --git a/src/haveip6.h2 b/src/haveip6.h2
 new file mode 100644
 index 0000000..5564de9
 --- /dev/null
-+++ b/haveip6.h2
++++ b/src/haveip6.h2
 @@ -0,0 +1 @@
 +#define LIBC_HAS_IP6 1
-diff --git a/haven2i.h1 b/haven2i.h1
+diff --git a/src/haven2i.h1 b/src/haven2i.h1
 new file mode 100644
 index 0000000..732c485
 --- /dev/null
-+++ b/haven2i.h1
++++ b/src/haven2i.h1
 @@ -0,0 +1 @@
 +#undef HAVE_N2I
-diff --git a/haven2i.h2 b/haven2i.h2
+diff --git a/src/haven2i.h2 b/src/haven2i.h2
 new file mode 100644
 index 0000000..fd50644
 --- /dev/null
-+++ b/haven2i.h2
++++ b/src/haven2i.h2
 @@ -0,0 +1 @@
 +#define HAVE_N2I
-diff --git a/hier.c b/hier.c
+diff --git a/src/hier.c b/src/hier.c
 index b57dba0..e4b1a7f 100644
---- a/hier.c
-+++ b/hier.c
+--- a/src/hier.c
++++ b/src/hier.c
 @@ -32,7 +32,9 @@ void hier()
    c(auto_home,"bin","axfr-get",-1,-1,0755);
  
@@ -1811,11 +1811,11 @@ index b57dba0..e4b1a7f 100644
    c(auto_home,"bin","dnsname",-1,-1,0755);
    c(auto_home,"bin","dnstxt",-1,-1,0755);
    c(auto_home,"bin","dnsmx",-1,-1,0755);
-diff --git a/ip6.h b/ip6.h
+diff --git a/src/ip6.h b/src/ip6.h
 new file mode 100644
 index 0000000..c1135e9
 --- /dev/null
-+++ b/ip6.h
++++ b/src/ip6.h
 @@ -0,0 +1,28 @@
 +#ifndef IP6_H
 +#define IP6_H
@@ -1845,11 +1845,11 @@ index 0000000..c1135e9
 +const static char ip4loopback[4] = {127,0,0,1};
 +
 +#endif
-diff --git a/ip6_fmt.c b/ip6_fmt.c
+diff --git a/src/ip6_fmt.c b/src/ip6_fmt.c
 new file mode 100644
 index 0000000..b2444bb
 --- /dev/null
-+++ b/ip6_fmt.c
++++ b/src/ip6_fmt.c
 @@ -0,0 +1,60 @@
 +#include "fmt.h"
 +#include "byte.h"
@@ -1911,11 +1911,11 @@ index 0000000..b2444bb
 +  }
 +  return 32;
 +}
-diff --git a/ip6_scan.c b/ip6_scan.c
+diff --git a/src/ip6_scan.c b/src/ip6_scan.c
 new file mode 100644
 index 0000000..f355d46
 --- /dev/null
-+++ b/ip6_scan.c
++++ b/src/ip6_scan.c
 @@ -0,0 +1,115 @@
 +#include "scan.h"
 +#include "ip4.h"
@@ -2032,10 +2032,10 @@ index 0000000..f355d46
 +  }
 +  return 32;
 +}
-diff --git a/log.c b/log.c
+diff --git a/src/log.c b/src/log.c
 index c43e8b0..df465e2 100644
---- a/log.c
-+++ b/log.c
+--- a/src/log.c
++++ b/src/log.c
 @@ -3,6 +3,7 @@
  #include "uint16.h"
  #include "error.h"
@@ -2184,10 +2184,10 @@ index c43e8b0..df465e2 100644
  {
    uint32 u;
    int i;
-diff --git a/okclient.c b/okclient.c
+diff --git a/src/okclient.c b/src/okclient.c
 index a648c02..9a0d3c6 100644
---- a/okclient.c
-+++ b/okclient.c
+--- a/src/okclient.c
++++ b/src/okclient.c
 @@ -2,24 +2,34 @@
  #include <sys/stat.h>
  #include "str.h"
@@ -2227,10 +2227,10 @@ index a648c02..9a0d3c6 100644
      if (!fn[i]) return 0;
      fn[i] = 0;
    }
-diff --git a/printrecord.c b/printrecord.c
+diff --git a/src/printrecord.c b/src/printrecord.c
 index ed0b42d..4bc7c3e 100644
---- a/printrecord.c
-+++ b/printrecord.c
+--- a/src/printrecord.c
++++ b/src/printrecord.c
 @@ -4,6 +4,7 @@
  #include "byte.h"
  #include "dns.h"
@@ -2255,10 +2255,10 @@ index ed0b42d..4bc7c3e 100644
    else {
      if (!stralloc_cats(out," ")) return 0;
      uint16_unpack_big(misc,&u16);
-diff --git a/qlog.c b/qlog.c
+diff --git a/src/qlog.c b/src/qlog.c
 index 5c5c7ba..60816df 100644
---- a/qlog.c
-+++ b/qlog.c
+--- a/src/qlog.c
++++ b/src/qlog.c
 @@ -20,15 +20,15 @@ static void octal(unsigned char c)
    put('0' + (c & 7));
  }
@@ -2280,10 +2280,10 @@ index 5c5c7ba..60816df 100644
    put(':');
    hex(port >> 8);
    hex(port & 255);
-diff --git a/query.c b/query.c
+diff --git a/src/query.c b/src/query.c
 index 46cdc00..e0f48b3 100644
---- a/query.c
-+++ b/query.c
+--- a/src/query.c
++++ b/src/query.c
 @@ -12,6 +12,9 @@
  #include "alloc.h"
  #include "response.h"
@@ -2661,10 +2661,10 @@ index 46cdc00..e0f48b3 100644
  
    return doit(z,0);
  }
-diff --git a/query.h b/query.h
+diff --git a/src/query.h b/src/query.h
 index eff68b2..f179c22 100644
---- a/query.h
-+++ b/query.h
+--- a/src/query.h
++++ b/src/query.h
 @@ -14,16 +14,17 @@ struct query {
    char *name[QUERY_MAXLEVEL];
    char *control[QUERY_MAXLEVEL]; /* pointing inside name */
@@ -2686,10 +2686,10 @@ index eff68b2..f179c22 100644
  extern void query_io(struct query *,iopause_fd *,struct taia *);
  extern int query_get(struct query *,iopause_fd *,struct taia *);
  
-diff --git a/roots.c b/roots.c
+diff --git a/src/roots.c b/src/roots.c
 index 3cfe959..4162ec5 100644
---- a/roots.c
-+++ b/roots.c
+--- a/src/roots.c
++++ b/src/roots.c
 @@ -6,6 +6,7 @@
  #include "error.h"
  #include "direntry.h"
@@ -2750,11 +2750,11 @@ index 3cfe959..4162ec5 100644
      }
    }
  }
-diff --git a/scan_xlong.c b/scan_xlong.c
+diff --git a/src/scan_xlong.c b/src/scan_xlong.c
 new file mode 100644
 index 0000000..1113433
 --- /dev/null
-+++ b/scan_xlong.c
++++ b/src/scan_xlong.c
 @@ -0,0 +1,23 @@
 +#include "scan.h"
 +
@@ -2779,10 +2779,10 @@ index 0000000..1113433
 +  *dest=l;
 +  return tmp-src;
 +}
-diff --git a/server.c b/server.c
+diff --git a/src/server.c b/src/server.c
 index e486fe1..d52ce87 100644
---- a/server.c
-+++ b/server.c
+--- a/src/server.c
++++ b/src/server.c
 @@ -4,6 +4,7 @@
  #include "buffer.h"
  #include "strerr.h"
@@ -2927,11 +2927,11 @@ index e486fe1..d52ce87 100644
 +      }
    }
  }
-diff --git a/sockaddr_in6.h1 b/sockaddr_in6.h1
+diff --git a/src/sockaddr_in6.h1 b/src/sockaddr_in6.h1
 new file mode 100644
 index 0000000..b1f8f5e
 --- /dev/null
-+++ b/sockaddr_in6.h1
++++ b/src/sockaddr_in6.h1
 @@ -0,0 +1,21 @@
 +#include "haveip6.h"
 +#ifdef LIBC_HAS_IP6
@@ -2954,20 +2954,20 @@ index 0000000..b1f8f5e
 +#include <sys/socket.h>
 +#include <netinet/in.h>
 +#endif
-diff --git a/sockaddr_in6.h2 b/sockaddr_in6.h2
+diff --git a/src/sockaddr_in6.h2 b/src/sockaddr_in6.h2
 new file mode 100644
 index 0000000..d484041
 --- /dev/null
-+++ b/sockaddr_in6.h2
++++ b/src/sockaddr_in6.h2
 @@ -0,0 +1,4 @@
 +#include <sys/types.h>
 +#include <sys/socket.h>
 +#include <netinet/in.h>
 +
-diff --git a/socket.h b/socket.h
+diff --git a/src/socket.h b/src/socket.h
 index 95e2a7c..bbb0f82 100644
---- a/socket.h
-+++ b/socket.h
+--- a/src/socket.h
++++ b/src/socket.h
 @@ -2,21 +2,37 @@
  #define SOCKET_H
  
@@ -3007,11 +3007,11 @@ index 95e2a7c..bbb0f82 100644
 +extern int noipv6;
 +
  #endif
-diff --git a/socket_accept6.c b/socket_accept6.c
+diff --git a/src/socket_accept6.c b/src/socket_accept6.c
 new file mode 100644
 index 0000000..48a0b6d
 --- /dev/null
-+++ b/socket_accept6.c
++++ b/src/socket_accept6.c
 @@ -0,0 +1,43 @@
 +#include <sys/param.h>
 +#include <sys/socket.h>
@@ -3056,10 +3056,10 @@ index 0000000..48a0b6d
 +  return fd;
 +#endif
 +}
-diff --git a/socket_bind.c b/socket_bind.c
+diff --git a/src/socket_bind.c b/src/socket_bind.c
 index 20830a4..a33efca 100644
---- a/socket_bind.c
-+++ b/socket_bind.c
+--- a/src/socket_bind.c
++++ b/src/socket_bind.c
 @@ -5,7 +5,7 @@
  #include "byte.h"
  #include "socket.h"
@@ -3069,11 +3069,11 @@ index 20830a4..a33efca 100644
  {
    struct sockaddr_in sa;
  
-diff --git a/socket_bind6.c b/socket_bind6.c
+diff --git a/src/socket_bind6.c b/src/socket_bind6.c
 new file mode 100644
 index 0000000..20b22b8
 --- /dev/null
-+++ b/socket_bind6.c
++++ b/src/socket_bind6.c
 @@ -0,0 +1,43 @@
 +#include <sys/param.h>
 +#include "sockaddr_in6.h"
@@ -3118,11 +3118,11 @@ index 0000000..20b22b8
 +  return socket_bind6(s,ip,port,scope_id);
 +}
 +
-diff --git a/socket_connect6.c b/socket_connect6.c
+diff --git a/src/socket_connect6.c b/src/socket_connect6.c
 new file mode 100644
 index 0000000..d2df4a2
 --- /dev/null
-+++ b/socket_connect6.c
++++ b/src/socket_connect6.c
 @@ -0,0 +1,39 @@
 +#include <sys/param.h>
 +#include <sys/types.h>
@@ -3163,11 +3163,11 @@ index 0000000..d2df4a2
 +  return -1;
 +#endif
 +}
-diff --git a/socket_getifidx.c b/socket_getifidx.c
+diff --git a/src/socket_getifidx.c b/src/socket_getifidx.c
 new file mode 100644
 index 0000000..c71fc48
 --- /dev/null
-+++ b/socket_getifidx.c
++++ b/src/socket_getifidx.c
 @@ -0,0 +1,13 @@
 +#include <sys/types.h>
 +#include <sys/socket.h>
@@ -3182,11 +3182,11 @@ index 0000000..c71fc48
 +  return 0;
 +#endif
 +}
-diff --git a/socket_noipv6.c b/socket_noipv6.c
+diff --git a/src/socket_noipv6.c b/src/socket_noipv6.c
 new file mode 100644
 index 0000000..289d699
 --- /dev/null
-+++ b/socket_noipv6.c
++++ b/src/socket_noipv6.c
 @@ -0,0 +1,7 @@
 +#include "haveip6.h"
 +
@@ -3195,11 +3195,11 @@ index 0000000..289d699
 +#else
 +int noipv6=1;
 +#endif
-diff --git a/socket_recv6.c b/socket_recv6.c
+diff --git a/src/socket_recv6.c b/src/socket_recv6.c
 new file mode 100644
 index 0000000..1fb9b4d
 --- /dev/null
-+++ b/socket_recv6.c
++++ b/src/socket_recv6.c
 @@ -0,0 +1,42 @@
 +#include <sys/param.h>
 +#include "sockaddr_in6.h"
@@ -3243,11 +3243,11 @@ index 0000000..1fb9b4d
 +
 +  return r;
 +}
-diff --git a/socket_send6.c b/socket_send6.c
+diff --git a/src/socket_send6.c b/src/socket_send6.c
 new file mode 100644
 index 0000000..ded6793
 --- /dev/null
-+++ b/socket_send6.c
++++ b/src/socket_send6.c
 @@ -0,0 +1,39 @@
 +#include <sys/types.h>
 +#include <sys/param.h>
@@ -3288,11 +3288,11 @@ index 0000000..ded6793
 +  return -1;
 +#endif
 +}
-diff --git a/socket_tcp6.c b/socket_tcp6.c
+diff --git a/src/socket_tcp6.c b/src/socket_tcp6.c
 new file mode 100644
 index 0000000..77bf7bd
 --- /dev/null
-+++ b/socket_tcp6.c
++++ b/src/socket_tcp6.c
 @@ -0,0 +1,44 @@
 +#include <sys/types.h>
 +#include <sys/param.h>
@@ -3338,11 +3338,11 @@ index 0000000..77bf7bd
 +#endif
 +}
 +
-diff --git a/socket_udp6.c b/socket_udp6.c
+diff --git a/src/socket_udp6.c b/src/socket_udp6.c
 new file mode 100644
 index 0000000..3a10f49
 --- /dev/null
-+++ b/socket_udp6.c
++++ b/src/socket_udp6.c
 @@ -0,0 +1,43 @@
 +#include <sys/types.h>
 +#include <sys/param.h>
@@ -3387,10 +3387,10 @@ index 0000000..3a10f49
 +  return socket_udp();
 +#endif
 +}
-diff --git a/tdlookup.c b/tdlookup.c
+diff --git a/src/tdlookup.c b/src/tdlookup.c
 index da7420d..d3e473e 100644
---- a/tdlookup.c
-+++ b/tdlookup.c
+--- a/src/tdlookup.c
++++ b/src/tdlookup.c
 @@ -8,6 +8,7 @@
  #include "dns.h"
  #include "seek.h"
@@ -3501,10 +3501,10 @@ index da7420d..d3e473e 100644
  
    r = doit(q,qtype);
  
-diff --git a/tinydns-conf.c b/tinydns-conf.c
+diff --git a/src/tinydns-conf.c b/src/tinydns-conf.c
 index d3a4ce5..db83f11 100644
---- a/tinydns-conf.c
-+++ b/tinydns-conf.c
+--- a/src/tinydns-conf.c
++++ b/src/tinydns-conf.c
 @@ -82,6 +82,18 @@ int main(int argc,char **argv)
    finish();
    perm(0755);
@@ -3524,10 +3524,10 @@ index d3a4ce5..db83f11 100644
    start("root/add-mx");
    outs("#!/bin/sh\nexec ");
    outs(auto_home); outs("/bin/tinydns-edit data data.new add mx ${1+\"$@\"}\n");
-diff --git a/tinydns-data.c b/tinydns-data.c
+diff --git a/src/tinydns-data.c b/src/tinydns-data.c
 index ba82f84..b42bd62 100644
---- a/tinydns-data.c
-+++ b/tinydns-data.c
+--- a/src/tinydns-data.c
++++ b/src/tinydns-data.c
 @@ -8,6 +8,7 @@
  #include "byte.h"
  #include "fmt.h"
@@ -3586,10 +3586,10 @@ index ba82f84..b42bd62 100644
        case '@':
  	if (!dns_domain_fromdot(&d1,f[0].s,f[0].len)) nomem();
  	if (!stralloc_0(&f[4])) nomem();
-diff --git a/tinydns-edit.c b/tinydns-edit.c
+diff --git a/src/tinydns-edit.c b/src/tinydns-edit.c
 index 126a7e0..8633220 100644
---- a/tinydns-edit.c
-+++ b/tinydns-edit.c
+--- a/src/tinydns-edit.c
++++ b/src/tinydns-edit.c
 @@ -13,6 +13,7 @@
  #include "str.h"
  #include "fmt.h"
@@ -3690,11 +3690,11 @@ index 126a7e0..8633220 100644
    switch(mode) {
      case '.': case '&': case '@':
        for (i = 0;i < 26;++i)
-diff --git a/tryip6.c b/tryip6.c
+diff --git a/src/tryip6.c b/src/tryip6.c
 new file mode 100644
 index 0000000..e0d7cfb
 --- /dev/null
-+++ b/tryip6.c
++++ b/src/tryip6.c
 @@ -0,0 +1,8 @@
 +#include <sys/types.h>
 +#include <sys/socket.h>
@@ -3704,11 +3704,11 @@ index 0000000..e0d7cfb
 +  struct sockaddr_in6 sa;
 +  sa.sin6_family = PF_INET6;
 +}
-diff --git a/tryn2i.c b/tryn2i.c
+diff --git a/src/tryn2i.c b/src/tryn2i.c
 new file mode 100644
 index 0000000..84c3a08
 --- /dev/null
-+++ b/tryn2i.c
++++ b/src/tryn2i.c
 @@ -0,0 +1,8 @@
 +#include <sys/types.h>
 +#include <sys/socket.h>
@@ -3718,11 +3718,11 @@ index 0000000..84c3a08
 +  static char ifname[IFNAMSIZ];
 +  char *tmp=if_indextoname(0,ifname);
 +}
-diff --git a/trysa6.c b/trysa6.c
+diff --git a/src/trysa6.c b/src/trysa6.c
 new file mode 100644
 index 0000000..0fd180c
 --- /dev/null
-+++ b/trysa6.c
++++ b/src/trysa6.c
 @@ -0,0 +1,8 @@
 +#include <sys/types.h>
 +#include <sys/socket.h>
