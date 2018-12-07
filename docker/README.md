@@ -84,11 +84,6 @@ a.ns.tast.com.          259200  IN      A       127.0.0.1
 ;; MSG SIZE  rcvd: 77
 ```
 
-Start the service:
-
-```docker run -v `pwd`/test.dns:/srv/dns/root/data -p 53:53 cepharum/dbndns```
-
-
 ### Docker Compose:
 
 ```
